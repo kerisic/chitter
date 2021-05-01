@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>
-  <script src="public/src/signup.js" defer></script>
 
+<body>
+  <script src="public/src/login.js" defer></script>
+  <script src="public/src/signup.js" defer></script>
+  
   <header>
     <h1>Welcome to Chitter</h1>
   </header>
 
   <br>
 
+  <div class="logincontainer">
+    <form>
+      <input name="loginhandle" type="text" placeholder="handle">
+      <input name="loginpassword" type="password" placeholder="password">
+      <button id="loginButton">Login</button>
+    </form>
+  </div>
+
+  <br>
+
   <div class="signupcontainer">
     <form>
       <input name="handle" type="text" placeholder="handle">
-      <input name="password" type="text" placeholder="password">
+      <input name="password" type="password" placeholder="password">
       <button id="signupButton">Sign Up</button>
     </form>
   </div>
@@ -28,10 +41,11 @@
   <div class="chitterform">
     <form>
       <input type="text" placeholder="type something">
-      <input type="submit" >
+      <input type="submit">
     </form>
   </div>
-  
-  
+
+
 </body>
+
 </html>

@@ -1,17 +1,19 @@
 class User {
-  constructor(id, handle) {
+  constructor(id, handle, session) {
     this.id = id;
     this.handle = handle;
+    this.session = session;
   }
 }
 
 let user;
 function eventListeners() {
-  document.addEventListener("DOMContentLoaded", signUpListener()); 
+  loadSession();
+  signUpListener();
+  loginListener();
 }
 
 eventListeners();
-
 
 function signUpListener() {
   let signUpButton = document.getElementById("signupButton");
@@ -36,9 +38,9 @@ function signup(data) {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    user = new User(data.id, data.handle);
+    user = new User(data.id, data.handle, "");
     document.getElementsByClassName("signupcontainer")[0].innerHTML = 
-    `<h2>Welcome ${user.handle}</h2>`
+    `<h2>Sign up successful! Now try logging in.</h2>`
   })
   .catch((error) => {
     console.error('Error:', error);
