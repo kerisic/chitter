@@ -8,9 +8,13 @@ class User {
 
 let user;
 function eventListeners() {
+  document.addEventListener("DOMContentLoaded", getPeeps());
   loadSession();
-  signUpListener();
-  loginListener();
+  if (checkSession() === "") {
+    signUpListener();
+    loginListener();
+  }
+  logoutListener();
 }
 
 eventListeners();

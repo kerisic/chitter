@@ -26,6 +26,7 @@ function login(credentials) {
     loginuser = new User(data.user_id, credentials.session.handle, data.session_key);
     saveSession(loginuser);
     hideForms();
+    logoutListener();
   })
   .catch((error) => {
     console.error('Error:', error);
