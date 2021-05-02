@@ -26,6 +26,7 @@ function login(credentials) {
     loginuser = new User(data.user_id, credentials.session.handle, data.session_key);
     saveSession(loginuser);
     hideForms();
+    showPeepForm();
     logoutListener();
   })
   .catch((error) => {
@@ -37,6 +38,14 @@ function hideForms() {
   document.getElementsByClassName("logincontainer")[0].innerHTML = 
     `<h2>Hi ${loginuser.handle} :) Start chatting!</h2>`;
   document.getElementsByClassName("signupcontainer")[0].innerHTML = "";
+}
+
+function showPeepForm() {
+  document.getElementsByClassName("chitterform")[0].innerHTML = 
+  `<form>
+      <input name="peeptext" type="text" placeholder="type something">
+      <button id="postButton">Submit</button>
+  </form>`
 }
 
 function saveSession(user) {
@@ -54,5 +63,6 @@ function loadSession() {
   if (session !== "") {
     loginuser = new User(session.user_id, session.handle, session.session_key)
     hideForms();
+    showPeepForm();
   }
 }

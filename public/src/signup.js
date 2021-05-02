@@ -14,6 +14,7 @@ function eventListeners() {
     signUpListener();
     loginListener();
   }
+  postPeepListener();
   logoutListener();
 }
 
