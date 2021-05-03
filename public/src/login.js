@@ -3,46 +3,51 @@ let loginuser;
 function loginListener() {
   let loginButton = document.getElementById("loginButton");
   loginButton.addEventListener("click", function (event) {
-  event.preventDefault(); 
-  let handle = document.getElementsByName("loginhandle")[0].value;
-  let password = document.getElementsByName("loginpassword")[0].value;
-  let credentials = {"session": {"handle":`${handle}`, "password":`${password}`}};
-  login(credentials)
+    event.preventDefault();
+    let handle = document.getElementsByName("loginhandle")[0].value;
+    let password = document.getElementsByName("loginpassword")[0].value;
+    let credentials = {
+      "session": {
+        "handle": `${handle}`,
+        "password": `${password}`
+      }
+    };
+    login(credentials)
   });
 }
 
 function login(credentials) {
   fetch("https://chitter-backend-api-v2.herokuapp.com/sessions", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(credentials),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    console.log(credentials);
-    loginuser = new User(data.user_id, credentials.session.handle, data.session_key);
-    saveSession(loginuser);
-    hideForms();
-    showPeepForm();
-    logoutListener();
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(credentials),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      console.log(credentials);
+      loginuser = new User(data.user_id, credentials.session.handle, data.session_key);
+      saveSession(loginuser);
+      hideForms();
+      showPeepForm();
+      logoutListener();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
 
 function hideForms() {
-  document.getElementsByClassName("logincontainer")[0].innerHTML = 
-    `<h2>Hi ${loginuser.handle} :) Start chatting!</h2>`;
+  document.getElementsByClassName("logincontainer")[0].innerHTML =
+    `<h2>Hi ${loginuser.handle} 😊</h2>`;
   document.getElementsByClassName("signupcontainer")[0].innerHTML = "";
 }
 
 function showPeepForm() {
-  document.getElementsByClassName("chitterform")[0].innerHTML = 
-  `<form>
+  document.getElementsByClassName("chitterform")[0].innerHTML =
+    `<form>
       <input name="peeptext" type="text" placeholder="type something">
       <button id="postButton">Submit</button>
   </form>`
@@ -53,9 +58,9 @@ function saveSession(user) {
 }
 
 function checkSession() {
-  return localStorage.getItem("session")
-    ? JSON.parse(localStorage.getItem("session"))
-    : "";
+  return localStorage.getItem("session") ?
+    JSON.parse(localStorage.getItem("session")) :
+    "";
 }
 
 function loadSession() {
