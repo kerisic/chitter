@@ -34,6 +34,7 @@ function createPeep(peep) {
 }
 
 function postPeepListener() {
+  if (checkSession() !== "") {
   let postButton = document.getElementById("postButton");
   postButton.addEventListener("click", function (event) {
     event.preventDefault();
@@ -48,6 +49,7 @@ function postPeepListener() {
     let token = `Token token=${currentUser.session}`;
     postPeep(data, token);
   });
+  }
 }
 
 function postPeep(data, token) {
@@ -83,7 +85,8 @@ function formatDate(date) {
 function deletePeep(e) {
   if (e.target.classList.contains("delete-peep-btn")) {
     let id = e.target.parentElement.id; 
-    e.target.parentElement.remove(); 
+    let peep = document.getElementById(`peep-${id}`);
+    peep.remove();
     let token = checkSession().session;
     fetch('https://chitter-backend-api-v2.herokuapp.com/peeps/' + id, {
     method: 'DELETE',
@@ -93,7 +96,6 @@ function deletePeep(e) {
     })
     .then(res => res.text()) 
     .then(res => {console.log(res);
-      location.reload();
     });
   }
 }

@@ -32,6 +32,7 @@ function login(credentials) {
       saveSession(loginuser);
       hideForms();
       showPeepForm();
+      postPeepListener();
       logoutListener();
     })
     .catch((error) => {
