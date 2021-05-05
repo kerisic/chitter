@@ -16,6 +16,25 @@ function loginListener() {
   });
 }
 
+function loginFormListener() {
+  let loginFormButton =  document.getElementById("loginFormButton");
+  loginFormButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    document.getElementsByClassName("logincontainer")[0].innerHTML =
+    `
+    <button class="backButton">Back</button>
+    <form>
+      <input class="handle" name="loginhandle" type="text" placeholder="handle">
+      <input class="password" name="loginpassword" type="password" placeholder="password">
+      <button id="loginButton">Login</button>
+    </form>
+    `;
+    document.getElementsByClassName("signupcontainer")[0].innerHTML = "";
+    loginListener();
+    backListener();
+  })
+}
+
 function login(credentials) {
   fetch("https://chitter-backend-api-v2.herokuapp.com/sessions", {
       method: 'POST',
@@ -42,15 +61,15 @@ function login(credentials) {
 
 function hideForms() {
   document.getElementsByClassName("logincontainer")[0].innerHTML =
-    `<h2>Hi ${loginuser.handle} 😊</h2>`;
+    "";
   document.getElementsByClassName("signupcontainer")[0].innerHTML = "";
 }
 
 function showPeepForm() {
   document.getElementsByClassName("chitterform")[0].innerHTML =
     `<form>
-      <input name="peeptext" type="text" placeholder="type something">
-      <button id="postButton">Submit</button>
+      <input name="peeptext" class="form" type="text" placeholder="  What's on your mind ${loginuser.handle}?">
+      <button id="postButton"><i class="material-icons" style="font-size:13px">add</i></button>
   </form>`
 }
 

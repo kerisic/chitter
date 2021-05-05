@@ -16,17 +16,30 @@ function createPeep(peep) {
   div.setAttribute("id", `peep-${peep.id}`);
   let date = new Date(peep.created_at);
   date = formatDate(date);
+  let likes;
+  if (peep.likes.length === 1) {
+    likes = '1 like'
+  } else if (peep.likes.length < 1) {
+    likes = 'Like'
+  } else {
+    likes = `${peep.likes.length} likes`
+  }
   if (checkSession() !== "" && checkSession().id === peep.user.id) {
-  div.innerHTML = `                                                 
+  div.innerHTML = `       
+           <div class="peep-text">  
+           <div class="peep-title"><div class="peep-handle">${peep.user.handle}</div><div id="${peep.id}"><button type="button" class="delete-peep-btn"><i class="fa fa-trash-o"></i></buttton></div></div>
            <div class="peepbody">${peep.body}</div>
-           <div class="peepdetails" id="${peep.id}">${peep.likes.length} likes | posted by ${peep.user.handle} | ${date} <button type="button" class="delete-peep-btn">Delete</buttton></div> 
-           <br>
+           <div class="peepdetails" ><div class="likes">${likes}</div> <div class="date" >${date} </div></div> 
+           </div>   
       `;
   } else {
-  div.innerHTML = `                                                 
+  div.innerHTML = `    
+          <div class="peep-text">  
+          <div class="peep-handle">${peep.user.handle}</div>                                         
            <div class="peepbody">${peep.body}</div>
-           <div class="peepdetails">${peep.likes.length} likes | posted by ${peep.user.handle} | ${date}</div> 
-           <br>
+           <div class="peepdetails" id="${peep.id}"><div class="likes">${likes}</div> <div class="date">${date} </div></div> 
+           </div>  
+           
       `;
   }
   peepsContainer = document.querySelector(".peepscontainer");
@@ -79,7 +92,7 @@ function formatDate(date) {
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0' + minutes : minutes;
   var strTime = hours + ':' + minutes + ' ' + ampm;
-  return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "  " + strTime;
+  return date.getDate() + " " + (date.toLocaleString('default', { month: 'long' })) + " " + date.getFullYear() + " at " + strTime;
 }
 
 function deletePeep(e) {

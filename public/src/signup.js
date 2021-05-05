@@ -13,8 +13,8 @@ function eventListeners() {
   document.addEventListener("DOMContentLoaded", getPeeps());
   loadSession();
   if (checkSession() === "") {
-    signUpListener();
-    loginListener();
+    loginFormListener();
+    signupFormListener();
   }
   peepContainer.addEventListener("click", deletePeep);
   postPeepListener();
@@ -37,10 +37,31 @@ function signUpListener() {
     }
     console.log(data);
     signup(data)
+    
   });
 }
 
+function signupFormListener() {
+  let signupFormButton =  document.getElementById("signupFormButton");
+  signupFormButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    document.getElementsByClassName("signupcontainer")[0].innerHTML =
+    `
+    <button class="backButton">Back</button>
+    <form>
+      <input name="handle" class="handle" type="text" placeholder="handle">
+      <input name="password" class="password" type="password" placeholder="password">
+      <button id="signupButton">Signup</button>
+    </form>
+    `;
+    document.getElementsByClassName("logincontainer")[0].innerHTML = "";
+    signUpListener();
+    backListener();
+  })
+}
+
 function signup(data) {
+  let password = data.user.password;
   fetch("https://chitter-backend-api-v2.herokuapp.com/users", {
       method: 'POST',
       headers: {
@@ -52,10 +73,23 @@ function signup(data) {
     .then(data => {
       console.log('Success:', data);
       user = new User(data.id, data.handle, "");
-      document.getElementsByClassName("signupcontainer")[0].innerHTML =
-        `<h2>Sign up successful! Now try logging in.</h2>`
+      let credentials = {
+        "session": {
+          "handle": `${data.handle}`,
+          "password": `${password}`
+        }
+      };
+      login(credentials);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
+}
+
+function backListener() {
+  let backButton = document.getElementsByClassName("backButton")[0];
+  backButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    location.reload();
+  });
 }
