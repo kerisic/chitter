@@ -10,7 +10,9 @@
     "jasmine": "^3.7.0",
     "jest": "^26.6.3"
   },
-  "scripts": { "test": "jasmine" },
+  "scripts": {
+    "test": "jasmine"
+  },
   "author": "",
   "license": "ISC"
 }
